@@ -138,7 +138,7 @@ class _FaceRecognitionScreenState extends State<FaceRecognitionScreen> {
   void _compareFaces() {
     if (_embedding1 != null && _embedding2 != null) {
       double distance = _calculateDistance(_embedding1!, _embedding2!);
-      double threshold = 0.6; // Adjust for accuracy
+      double threshold = 0.9; // Adjust for accuracy
 
       showDialog(
         context: context,
