@@ -186,8 +186,9 @@ class _FaceRecognitionScreenState extends State<FaceRecognitionScreen> {
     }
 
     double distance = _calculateDistance(_embedding1!, _embedding2!);
-    double threshold = 1.0; 
+    double threshold = 0.85; // Stricter threshold to avoid false positives (0.8 - 0.9 range)
     bool isMatch = distance < threshold;
+    double similarity = max(0, 100 - (distance * 50)); // Map distance [0, 2] to % [100, 0]
 
     showModalBottomSheet(
       context: context,
@@ -213,8 +214,12 @@ class _FaceRecognitionScreenState extends State<FaceRecognitionScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              "Similarity Distance: ${distance.toStringAsFixed(3)}",
-              style: TextStyle(color: Colors.white.withOpacity(0.6)),
+              "Similarity: ${similarity.toStringAsFixed(1)}%",
+              style: TextStyle(color: isMatch ? Colors.greenAccent : Colors.redAccent, fontSize: 18, fontWeight: FontWeight.w600),
+            ),
+            Text(
+              "Raw Distance: ${distance.toStringAsFixed(3)}",
+              style: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 12),
             ),
             const SizedBox(height: 24),
             SizedBox(
